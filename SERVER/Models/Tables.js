@@ -1,15 +1,15 @@
-const sequelize = require("./db")
-const { DataTypes } = require("sequelize")
+const sequelize = require('./Db')
+const { DataTypes } = require("sequelize");
 
-// Users Table Model Start
-const User = sequelize.define('User', {
-  user_id: {
+//! User TAble Modul 
+const User = sequelize.define("User", {
+  userId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  user_type: {
+  userRole: {
     type: DataTypes.STRING,
     allowNull: false,
     defaultValue: "user",
@@ -30,171 +30,213 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  male_image_name: {
-    type: DataTypes.STRING,
-  },
-  female_image_name: {
-    type: DataTypes.STRING,
-  },
   gender: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    defaultValue: false,
   },
-  updated_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
+  imageUrl: {
+    type: DataTypes.TEXT,
     allowNull: true,
   },
-}, {
-  paranoid: true, 
 });
-// Users Table Model End
 
-// Locations Table Model Start
+//! Locations Table Model 
 const Locations = sequelize.define('Locations', {
-  location_id: {
+  locationId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  location_name: {
+  locationName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   owner: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "Public",
+    defaultValue: 'Public',
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
+    allowNull: false,
   },
-  category: {
+  location: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
-  opening_hours: {
+  openingHours: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  visitDate: {
     type: DataTypes.STRING,
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
+    allowNull: false,
   },
   price: {
-    type: DataTypes.DATE,
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
-}, {
-  paranoid: true, // تمكين الحذف الناعم
-});
-// Locations Table Model End
-
-// Locations Images Table Model Start
-const Locations_images = sequelize.define('Locations_images', {
-  image_id: {
+  numberOfResidents: {
     type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: 0
   },
-  location_id: {
+  totalStars: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: 0
   },
-  image_name: {
+  phone: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  evaluation: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+    defaultValue: null
+  },
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
-}, {
-  paranoid: true, 
+  ViewThePlace: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  imageUrl: {
+    type: DataTypes.TEXT,
+    allowNull: true, 
+  },
 });
-// Locations Images Table Model End
 
-// Ratings and Reviews Taple Model Start
+//! Ratings and Reviews Taple Model 
 const Ratings_And_Reviews = sequelize.define('Ratings_And_Reviews', {
-  Ratings_And_Reviews_id: {
+  ratingsAndReviewsId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  location_id: {
+  locationId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  user_id: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  user_comment: {
+  locationName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  comment: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  location_rating: {
+  rating: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
+  imageUrl: {
+    type: DataTypes.TEXT,
+    allowNull: true, 
   },
-}, {
-  paranoid: true, // تمكين الحذف الناعم
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  postDate: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
-// Ratings and Reviews Taple Model End
 
-// Activities Table Model Start
-const Activities = sequelize.define('Activities', {
-  activity_id: {
+//! Ratings and Reviews Taple Model 
+const Ratings_And_Reviews_Product = sequelize.define('Ratings_And_Reviews_Product', {
+  ratingsAndReviewsProductId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  location_id: {
+  productId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  activity_name: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  activity_description: {
-    type: DataTypes.INTEGER,
+  productName: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  deleted_at: {
-    type: DataTypes.DATE,
+  comment: {
+    type: DataTypes.STRING,
     allowNull: true,
   },
-}, {
-  paranoid: true, // تمكين الحذف الناعم
+  rating: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  imageUrl: {
+    type: DataTypes.TEXT,
+    allowNull: true, 
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  postDate: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
-// Activities Table Model End
 
-// Contact Table Model Start
+//! Contact Table Model 
 const Contact_us = sequelize.define('Contact_us', {
-  Contact_us_id: {
+  contactUsId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  user_id: {
+  userId: {
     type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  username: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
   email: {
@@ -205,136 +247,135 @@ const Contact_us = sequelize.define('Contact_us', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  message_status: {
+  messageStatus: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "Not Readable",
+    defaultValue: "Unread",
   },
-  sent_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  message_category: {
+  messageCategory: {
     type: DataTypes.STRING,
   },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
-}, {
-  paranoid: true, // تمكين الحذف الناعم
 });
-// Contact Table Model End
 
-// Reservations Table Model Start
+//! Reservations Table Model 
 const Reservation = sequelize.define('Reservation', {
-  reservation_id: {
+  reservationId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  user_id: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  location_id: {
+  locationId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  reservation_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  visit_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  number_of_visitors: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  reservation_details: {
-    type: DataTypes.TEXT,
-  },
-  reservation_status: {
+  visitDate: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
-  payment_information: {
+  numberOfVisitors: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  locationName: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   price: {
     type: DataTypes.FLOAT,
   },
-  payment_method: {
+  cardholder: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  country: {
     type: DataTypes.STRING,
   },
-  contact_information: {
+  state: {
     type: DataTypes.STRING,
+  },
+  address: {
+    type: DataTypes.STRING,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   phone: {
     type: DataTypes.STRING,
   },
-  additional_comments: {
-    type: DataTypes.TEXT,
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-}, {
-  paranoid: true, // تمكين الحذف الناعم
 });
-// Reservations Table Model End
 
-// Cart Table Model Start
+//! Cart Table Model 
 const Cart = sequelize.define('Cart', {
-  cart_id: {
+  cartId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  user_id: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  product_id: {
+  productId: {
     type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  price: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  total_price: {
-    type: DataTypes.FLOAT,
+  category: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
+  productName: {
+    type: DataTypes.STRING, 
     allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  updated_at: {
-    type: DataTypes.DATE,
+  imageUrl: {
+    type: DataTypes.TEXT, 
     allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-}, {
-  paranoid: true,
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
-// Cart Table Model End
 
-// Products Table Model Start
+//! Products Table Model 
 const Products = sequelize.define('Products', {
-  product_id: {
+  productId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  product_name: {
+  productName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  category: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -342,68 +383,102 @@ const Products = sequelize.define('Products', {
     type: DataTypes.STRING,
   },
   price: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
+  imageUrl: {
+    type: DataTypes.TEXT,
     allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  updated_at: {
-    type: DataTypes.DATE,
+  owner: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    defaultValue: 'Public',
   },
-  deleted_at: {
-    type: DataTypes.DATE,
+  numberOfResidents: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0
+  },
+  totalStars: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0
+  },
+  phone: {
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
-}, {
-  paranoid: true,
+  evaluation: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+    defaultValue: null
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  ViewThePlace: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
-// Products Table Model End
 
-// Orders Table Model Start
+//! Orders Table Model 
 const Orders = sequelize.define('Orders', {
-  order_id: {
+  orderId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  user_id: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  total_price: {
+  totalPrice: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  order_status: {
+  orderStatus: {
     type: DataTypes.STRING,
     allowNull: false,
     defaultValue: "Pending",
   },
-  created_at: {
-    type: DataTypes.DATE,
+  cardholder: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  updated_at: {
-    type: DataTypes.DATE,
+  country: {
+    type: DataTypes.STRING,
+  },
+  state: {
+    type: DataTypes.STRING,
+  },
+  address: {
+    type: DataTypes.STRING,
+  },
+  email: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
+  phone: {
+    type: DataTypes.STRING,
   },
-}, {
-  paranoid: true,
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
-// Orders Table Model End
 
+//! Function For User TAble Modul
 const CreateUsersTable = () => {
   User.sync({ alter: true })
     .then(() => {
@@ -414,90 +489,99 @@ const CreateUsersTable = () => {
     })
 }
 
+//! Function For Locations TAble Modul
 const CreateLocationsTable = () => {
   Locations.sync({ alter: true })
     .then(() => {
       console.log("Locations Table Created");
     })
     .catch((error) => {
-      console.log("Ann Error Occurred", error);
-    })
+      console.error("Error creating Locations table:", error);
+    });
 }
 
-const CreateLocationsImagesTable = () => {
-  Locations_images.sync({ alter: true })
-    .then(() => {
-      console.log("User Table Created");
-    })
-    .catch((error) => {
-      console.log("Ann Error Occurred", error);
-    })
-}
-
+//! Function For Ratings_And_Reviews TAble Modul
 const CreateRatingsAndReviewsTable = () => {
   Ratings_And_Reviews.sync({ alter: true })
     .then(() => {
-      console.log("Locations Table Created");
+      console.log("Ratings_And_Reviews Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
     })
 }
 
+//! Function For Ratings_And_Reviews_Product TAble Modul
+const CreateRatingsAndReviewsProductTable = () => {
+  Ratings_And_Reviews_Product.sync({ alter: true })
+    .then(() => {
+      console.log("Ratings_And_Reviews_Product Table Created");
+    })
+    .catch((error) => {
+      console.log("Ann Error Occurred", error);
+    })
+}
+
+//! Function For Activities TAble Modul
 const CreateActivitiesTable = () => {
   Activities.sync({ alter: true })
     .then(() => {
-      console.log("User Table Created");
+      console.log("Activities Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
     })
 }
 
+//! Function For Contact_us TAble Modul
 const CreateContactUsTable = () => {
   Contact_us.sync({ alter: true })
     .then(() => {
-      console.log("Locations Table Created");
+      console.log("Contact_us Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
     })
 }
 
+//! Function For Reservation TAble Modul
 const CreateReservationTable = () => {
   Reservation.sync({ alter: true })
     .then(() => {
-      console.log("User Table Created");
+      console.log("Reservation Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
     })
 }
 
+//! Function For Cart TAble Modul
 const CreateCartTable = () => {
   Cart.sync({ alter: true })
     .then(() => {
-      console.log("User Table Created");
+      console.log("Cart Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
     })
 }
 
+//! Function For Products TAble Modul
 const CreateProductsTable = () => {
   Products.sync({ alter: true })
     .then(() => {
-      console.log("User Table Created");
+      console.log("Products Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
     })
 }
 
+//! Function For Orders TAble Modul
 const CreateOrdersTable = () => {
   Orders.sync({ alter: true })
     .then(() => {
-      console.log("User Table Created");
+      console.log("Orders Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
@@ -507,12 +591,22 @@ const CreateOrdersTable = () => {
 module.exports = {
   CreateUsersTable,
   CreateLocationsTable,
-  CreateLocationsImagesTable,
   CreateRatingsAndReviewsTable,
+  CreateRatingsAndReviewsProductTable,
   CreateActivitiesTable,
   CreateContactUsTable,
   CreateReservationTable,
   CreateCartTable,
   CreateProductsTable,
   CreateOrdersTable,
+  User,
+  Locations,
+  Ratings_And_Reviews,
+  Contact_us,
+  Reservation,
+  Cart,
+  Products,
+  Orders,
+  Ratings_And_Reviews_Product
 }
+
