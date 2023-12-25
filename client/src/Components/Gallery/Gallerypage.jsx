@@ -10,7 +10,7 @@ function Gallerypage() {
     // Fetch event data from the specified URL (http://localhost:5000/Activity)
     axios.get('http://localhost:4000/Get_All_Locations')
       .then(response => {
-        setEvents(response.data.Locations); // Assuming data is an array of events
+        setEvents(response.data.locations); // Assuming data is an array of events
       })
       .catch(error => console.error('Error fetching events:', error));
   }, []);

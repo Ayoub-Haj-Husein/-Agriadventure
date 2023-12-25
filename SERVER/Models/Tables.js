@@ -11,8 +11,8 @@ const User = sequelize.define("User", {
   },
   userRole: {
     type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: "user",
+    allowNull: true,
+    defaultValue: "User",
   },
   firstName: {
     type: DataTypes.STRING,
@@ -32,7 +32,8 @@ const User = sequelize.define("User", {
   },
   gender: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: "Undefined",
   },
   isDeleted: {
     type: DataTypes.BOOLEAN,
@@ -43,6 +44,11 @@ const User = sequelize.define("User", {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+  isBanned: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  }
 });
 
 //! Locations Table Model 
@@ -70,27 +76,27 @@ const Locations = sequelize.define('Locations', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  openingHours: {
-    type: DataTypes.INTEGER,
+  TheBeginningAndEndOfTheJourney: {
+    type: DataTypes.JSONB, 
     allowNull: false,
   },
-  visitDate: {
+  workdays: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  price: {
+  TicketPricePerPerson: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
   numberOfResidents: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    defaultValue: 0
+    defaultValue: 0,
   },
   totalStars: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    defaultValue: 0
+    defaultValue: 0,
   },
   phone: {
     type: DataTypes.INTEGER,
@@ -99,7 +105,7 @@ const Locations = sequelize.define('Locations', {
   evaluation: {
     type: DataTypes.FLOAT,
     allowNull: true,
-    defaultValue: null
+    defaultValue: null,
   },
   email: {
     type: DataTypes.STRING,
@@ -117,13 +123,16 @@ const Locations = sequelize.define('Locations', {
   },
   imageUrl: {
     type: DataTypes.TEXT,
-    allowNull: true, 
+    allowNull: true,
   },
 });
 
+module.exports = Locations;
+
+
 //! Ratings and Reviews Taple Model 
-const Ratings_And_Reviews = sequelize.define('Ratings_And_Reviews', {
-  ratingsAndReviewsId: {
+const Ratings_And_Reviews_Locations = sequelize.define('Ratings_And_Reviews_Locations', {
+  ratingsAndReviewsLocationsId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -231,10 +240,6 @@ const Contact_us = sequelize.define('Contact_us', {
     autoIncrement: true,
     allowNull: false,
   },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
   username: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -247,19 +252,16 @@ const Contact_us = sequelize.define('Contact_us', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  messageStatus: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: "Unread",
-  },
-  messageCategory: {
-    type: DataTypes.STRING,
-  },
   isDeleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
   },
+  readable: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  }
 });
 
 //! Reservations Table Model 
@@ -278,10 +280,6 @@ const Reservation = sequelize.define('Reservation', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  visitDate: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   numberOfVisitors: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -292,6 +290,7 @@ const Reservation = sequelize.define('Reservation', {
   },
   price: {
     type: DataTypes.FLOAT,
+    allowNull: false,
   },
   cardholder: {
     type: DataTypes.STRING,
@@ -312,8 +311,14 @@ const Reservation = sequelize.define('Reservation', {
   },
   phone: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  completeOrIncomplete: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
@@ -393,7 +398,6 @@ const Products = sequelize.define('Products', {
   owner: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'Public',
   },
   numberOfResidents: {
     type: DataTypes.INTEGER,
@@ -418,7 +422,7 @@ const Products = sequelize.define('Products', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  ViewThePlace: {
+  ViewTheProduct: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
@@ -476,6 +480,77 @@ const Orders = sequelize.define('Orders', {
     allowNull: false,
     defaultValue: false,
   },
+  ordersReceived: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  }
+});
+
+const FAQ = sequelize.define("FAQ", {
+  faqId: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  question: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  answer: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+});
+
+const FavoritesProducts = sequelize.define("FavoritesProducts", {
+  favoritesProductsId: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  productId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+});
+
+const FavoritesLocations = sequelize.define("FavoritesLocations", {
+  favoritesLocationsId: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  locationId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
 
 //! Function For User TAble Modul
@@ -500,11 +575,11 @@ const CreateLocationsTable = () => {
     });
 }
 
-//! Function For Ratings_And_Reviews TAble Modul
+//! Function For Ratings_And_Reviews_Locations TAble Modul
 const CreateRatingsAndReviewsTable = () => {
-  Ratings_And_Reviews.sync({ alter: true })
+  Ratings_And_Reviews_Locations.sync({ alter: true })
     .then(() => {
-      console.log("Ratings_And_Reviews Table Created");
+      console.log("Ratings_And_Reviews_Locations Table Created");
     })
     .catch((error) => {
       console.log("Ann Error Occurred", error);
@@ -588,6 +663,39 @@ const CreateOrdersTable = () => {
     })
 }
 
+//! Function For FAQ TAble Modul
+const CreateFAQTable = () => {
+FAQ.sync({ alter: true })
+  .then(() => {
+    console.log("FAQ Table Created");
+  })
+  .catch((error) => {
+    console.error("Error creating FAQ table:", error);
+  });
+}
+
+//! Function For FavoritesProducts TAble Modul
+const CreateFavoritesProductsTable = () => {
+  FavoritesProducts.sync({ alter: true })
+    .then(() => {
+      console.log("Favorites Products Table Created");
+    })
+    .catch((error) => {
+      console.error("Error creating Favorites Products table:", error);
+    });
+  }
+
+//! Function For FavoritesLocations TAble Modul
+const CreateFavoritesLocationsTable = () => {
+  FavoritesLocations.sync({ alter: true })
+    .then(() => {
+      console.log("Favorites Locations Table Created");
+    })
+    .catch((error) => {
+      console.error("Error creating Favorites Locations table:", error);
+    });
+  }
+
 module.exports = {
   CreateUsersTable,
   CreateLocationsTable,
@@ -599,14 +707,20 @@ module.exports = {
   CreateCartTable,
   CreateProductsTable,
   CreateOrdersTable,
+  CreateFAQTable,
+  CreateFavoritesProductsTable,
+  CreateFavoritesLocationsTable,
   User,
   Locations,
-  Ratings_And_Reviews,
+  Ratings_And_Reviews_Locations,
   Contact_us,
   Reservation,
   Cart,
   Products,
   Orders,
-  Ratings_And_Reviews_Product
+  Ratings_And_Reviews_Product,
+  FAQ,
+  FavoritesProducts,
+  FavoritesLocations
 }
 

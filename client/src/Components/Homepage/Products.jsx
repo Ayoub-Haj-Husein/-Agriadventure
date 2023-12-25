@@ -11,7 +11,7 @@ function PackageEvents() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/Get_All_Products');
+        const response = await axios.get('http://localhost:4000/Get_All_Products_For_Home_Page');
         console.log('API Response:', response.data.products);
 
         if (Array.isArray(response.data.products) && response.data.products.length > 0) {

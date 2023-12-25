@@ -17,10 +17,9 @@ function AddProduct() {
 
   const navigate = useNavigate();
 
-
-  const handleSubmitActivity = () =>{
-    navigate('/ProductsTable');
-  }
+  const handleRedirect = () => {
+    navigate('/ConfirmProduct');
+  };
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -49,7 +48,7 @@ function AddProduct() {
       });
 
       console.log('Post success:', response.data);
-      // Handle success or redirect as needed
+      handleRedirect()
     } catch (error) {
       console.error('Post error:', error);
       // Handle error
@@ -143,7 +142,7 @@ function AddProduct() {
                 id="category"
                 name="category"
                 onChange={handleChange}
-              >                
+              >
                 <option>Select Product</option>
                 <option value="Dairy">Dairy</option>
                 <option value="CropSeeds">Crop Seeds</option>
@@ -184,7 +183,6 @@ function AddProduct() {
 
         <button
           type="submit"
-          onClick={handleSubmitActivity}
           className="px-4 py-2 text-white transition duration-300 bg-blue-500 rounded hover:bg-blue-700"
         >
           Submit

@@ -40,7 +40,7 @@ const Registerpage = () => {
   };
 
   const redirectToLogin = () => {
-    window.location.href = '/Signin'; // Assuming '/Signin' is the route for sign-in
+    window.location.href = '/'; // Assuming '/Signin' is the route for sign-in
   };
 
   const handleSignUp = async (e) => {

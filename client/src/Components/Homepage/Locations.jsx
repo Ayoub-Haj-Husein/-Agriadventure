@@ -68,7 +68,6 @@ function Locations() {
           </figcaption>
         </figure>
       </Link>
-
     </div>
   );
 }

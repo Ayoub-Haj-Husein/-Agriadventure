@@ -26,9 +26,8 @@ const PaymentForm = () => {
   const [numberOfVisitors, setNumberOfVisitors] = useState("");
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  const price = location.state.price;
+  const TicketPricePerPerson = location.state.TicketPricePerPerson;
   const locationId = location.state.locationId;
-  const visitDate = location.state.visitDate;
   const locationName = location.state.locationName;
 
   const handleCountryChange = (event) => {
@@ -89,9 +88,8 @@ const PaymentForm = () => {
         country: country,
         state: state,
         address: address,
-        visitDate: visitDate,
         numberOfVisitors: numberOfVisitors,
-        price: price * numberOfVisitors,  
+        price: TicketPricePerPerson * numberOfVisitors,  
         locationName: locationName
       }, config);
 
